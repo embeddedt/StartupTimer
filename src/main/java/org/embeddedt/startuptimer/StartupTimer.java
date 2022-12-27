@@ -47,14 +47,13 @@ public class StartupTimer {
     boolean hasLeftMainMenu = false;
 
     public StartupTimer() {
-        MinecraftForge.EVENT_BUS.register(this);
         trueFullscreen = Minecraft.getMinecraft().gameSettings.fullScreen;
         Minecraft.getMinecraft().gameSettings.fullScreen = false;
     }
 
     @Mod.EventHandler
     public void preinit(FMLPreInitializationEvent event) {
-
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
