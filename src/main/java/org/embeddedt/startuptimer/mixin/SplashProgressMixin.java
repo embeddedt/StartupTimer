@@ -1,8 +1,5 @@
 package org.embeddedt.startuptimer.mixin;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL12.*;
-
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraftforge.fml.client.SplashProgress;
 import org.embeddedt.startuptimer.StartupTimer;
@@ -15,8 +12,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.lang.management.ManagementFactory;
 import java.lang.reflect.Field;
+
+import static org.lwjgl.opengl.GL11.*;
 
 @Mixin(targets = { "net/minecraftforge/fml/client/SplashProgress$2" })
 public abstract class SplashProgressMixin {
@@ -58,8 +56,7 @@ public abstract class SplashProgressMixin {
      * Get formatted timer + estimate string
      */
     private String getString(){
-        long startupTime = ManagementFactory.getRuntimeMXBean().getUptime();
-
+        long startupTime = System.currentTimeMillis() - StartupTimer.startupInstant;
         if(StartupTimer.doneTime > 0) startupTime = StartupTimer.doneTime;
 
         long minutes = (startupTime / 1000) / 60;
