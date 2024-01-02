@@ -1,20 +1,13 @@
 package org.embeddedt.startuptimer;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.item.Item;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,6 +31,7 @@ public class StartupTimer {
     public static StartupTimer INSTANCE;
 
     public static long doneTime = 0;
+    public static long startupInstant = ManagementFactory.getRuntimeMXBean().getStartTime();
 
     boolean triggered = false;
     boolean trueFullscreen;
@@ -67,7 +61,7 @@ public class StartupTimer {
                 Minecraft.getMinecraft().gameSettings.fullScreen = Minecraft.getMinecraft().isFullScreen();
             }
 
-            startupTime = ManagementFactory.getRuntimeMXBean().getUptime();
+            startupTime = System.currentTimeMillis() - startupInstant;
             LOGGER.info("Startup took " + startupTime + "ms.");
 
             doneTime = startupTime;
