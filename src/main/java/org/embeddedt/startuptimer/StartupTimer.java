@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.awt.*;
+import java.lang.management.ManagementFactory;
 
 @Mod(
         modid = StartupTimer.MOD_ID,
@@ -30,7 +31,7 @@ public class StartupTimer {
     public static StartupTimer INSTANCE;
 
     public static long doneTime = 0;
-    public static long startupInstant = System.currentTimeMillis();
+    public static long startupInstant = ManagementFactory.getRuntimeMXBean().getStartTime();
 
     boolean triggered = false;
     boolean trueFullscreen;
